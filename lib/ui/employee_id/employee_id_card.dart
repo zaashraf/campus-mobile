@@ -104,8 +104,8 @@ class _EmployeeIdCardState extends State<EmployeeIdCard> {
                     Column(
                       children: <Widget>[
                         Image.network(
-                          employeeIdModel!.photo.contains("https")
-                              ? employeeIdModel.photo
+                          employeeIdModel!.photo != ""
+                              ? "https://hollerith.ucsd.edu/emp-image/" + employeeIdModel.photo
                               : placeholderPhotoUrl,
                           fit: BoxFit.contain,
                           height: ScalingUtility.verticalSafeBlock * 14,
