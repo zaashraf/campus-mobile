@@ -105,7 +105,7 @@ class _EmployeeIdCardState extends State<EmployeeIdCard> {
                       children: <Widget>[
                         Image.network(
                           employeeIdModel!.photo != ""
-                              ? "https://hollerith.ucsd.edu/emp-image/" + employeeIdModel.photo
+                              ? employeeIdModel.photo
                               : placeholderPhotoUrl,
                           fit: BoxFit.contain,
                           height: ScalingUtility.verticalSafeBlock * 14,
@@ -127,7 +127,7 @@ class _EmployeeIdCardState extends State<EmployeeIdCard> {
                                     cardMargin),
                             child: FittedBox(
                               child: Text(
-                                employeeIdModel.employeePreferredDisplayName,
+                                employeeIdModel!.employeePreferredDisplayName,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: getFontSize(
