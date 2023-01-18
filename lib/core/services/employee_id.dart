@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:campus_mobile_experimental/app_networking.dart';
 import 'package:campus_mobile_experimental/core/models/employee_id.dart';
+import 'package:dio/dio.dart';
 
 class EmployeeIdService {
   final String myEmployeeProfileApiUrl =
@@ -26,8 +27,12 @@ class EmployeeIdService {
       _isLoading = false;
       return true;
     } catch (e) {
-      _error = e.toString();
-      _isLoading = false;
+      if (e is DioError && e.type == DioErrorType.receiveTimeout) {
+
+      } else {
+        _error = e.toString();
+        _isLoading = false;
+      }
       return false;
     }
   }

@@ -1,4 +1,5 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:campus_mobile_experimental/app_constants.dart';
 import 'package:campus_mobile_experimental/app_styles.dart';
 import 'package:campus_mobile_experimental/core/models/employee_id.dart';
@@ -91,6 +92,11 @@ class _EmployeeIdCardState extends State<EmployeeIdCard> {
       EmployeeIdModel? employeeIdModel, BuildContext context) {
     try {
       if (MediaQuery.of(context).size.width < 600) {
+        var placeholderImage = Image.network(
+            placeholderPhotoUrl,
+            fit: BoxFit.contain,
+            height: ScalingUtility.verticalSafeBlock * 14
+        );
         return Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: (Row(children: <Widget>[
@@ -103,10 +109,10 @@ class _EmployeeIdCardState extends State<EmployeeIdCard> {
                             left: cardMargin * 1.5, right: cardMargin * 1.5)),
                     Column(
                       children: <Widget>[
-                        Image.network(
-                          employeeIdModel!.photo != ""
-                              ? employeeIdModel.photo
-                              : placeholderPhotoUrl,
+                        CachedNetworkImage(
+                          imageUrl: employeeIdModel!.photo,
+                          placeholder: (context, url) => placeholderImage,
+                          errorWidget: (context, url, error) => placeholderImage,
                           fit: BoxFit.contain,
                           height: ScalingUtility.verticalSafeBlock * 14,
                         ),
@@ -233,6 +239,11 @@ class _EmployeeIdCardState extends State<EmployeeIdCard> {
           ])),
         );
       } else {
+        var otherPlaceholderImage = Image.network(
+            placeholderPhotoUrl,
+            fit: BoxFit.contain,
+            height: 125
+        );
         return (Row(children: <Widget>[
           Padding(
             padding: EdgeInsets.only(left: cardMargin * 1.5),
@@ -240,10 +251,10 @@ class _EmployeeIdCardState extends State<EmployeeIdCard> {
           Container(
             child: Column(
               children: <Widget>[
-                Image.network(
-                  employeeIdModel!.photo.contains("https")
-                      ? employeeIdModel.photo
-                      : placeholderPhotoUrl,
+                CachedNetworkImage(
+                  imageUrl: employeeIdModel!.photo,
+                  placeholder: (context, url) => otherPlaceholderImage,
+                  errorWidget: (context, url, error) => otherPlaceholderImage,
                   fit: BoxFit.contain,
                   height: 125,
                 ),
